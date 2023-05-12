@@ -1,10 +1,21 @@
 import { getMovieDetails } from 'Api/api';
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import Loader from 'components/Loader/Loader';
 import posterImg from '../images/posterImg.png';
+import {
+  Div,
+  Img,
+  Info,
+  MainTitle,
+  ScoreTitle,
+  Title,
+  AditionalTitle,
+  LinkNav,
+  List,
+  Arrow,
+} from './MovieDetails.styled';
 const baseURL = 'https://image.tmdb.org/t/p/original';
 
 const MovieDetails = () => {
@@ -29,46 +40,49 @@ const MovieDetails = () => {
 
   return (
     <>
-      <Link to={location.state?.from}>
-        <MdKeyboardDoubleArrowLeft style={{ width: '30px', height: '30px' }} />
+      <Arrow to={location.state?.from}>
+        <MdKeyboardDoubleArrowLeft
+          style={{ color: '#404b80', width: '30px', height: '30px' }}
+        />
         <span>Go Back</span>
-      </Link>
+      </Arrow>
+
       {isLoading && <Loader />}
-      <div>
+      <Div>
         <div>
-          <img
+          <Img
             src={poster_path ? baseURL + poster_path : posterImg}
             alt={title}
-            width="300"
-            height="450"
           />
         </div>
-        <div>
-          <h2>
+        <Info>
+          <MainTitle>
             {title} ({release_date && release_date.slice(0, 4)})
-          </h2>
-          <p>User score: {Math.floor(vote_average * 10)}%</p>
-          <h3>Overview</h3>
+          </MainTitle>
+          <ScoreTitle>
+            <b>User score:</b> {Math.floor(vote_average * 10)}%
+          </ScoreTitle>
+          <Title>Overview</Title>
           <p>{overview}</p>
-          <h3>Genres</h3>
+          <Title>Genres</Title>
           <ul>
             {genres && genres.map(({ id, name }) => <li key={id}>{name}</li>)}
           </ul>
-        </div>
-      </div>
-      <ul>
-        <h3>Aditional information</h3>
+        </Info>
+      </Div>
+      <List>
+        <AditionalTitle>Aditional information:</AditionalTitle>
         <li>
-          <Link to="cast" state={{ from: location.state?.from }}>
+          <LinkNav to="cast" state={{ from: location.state?.from }}>
             Cast
-          </Link>
+          </LinkNav>
         </li>
         <li>
-          <Link to="reviews" state={{ from: location.state?.from }}>
+          <LinkNav to="reviews" state={{ from: location.state?.from }}>
             Reviews
-          </Link>
+          </LinkNav>
         </li>
-      </ul>
+      </List>
       <Outlet />
     </>
   );

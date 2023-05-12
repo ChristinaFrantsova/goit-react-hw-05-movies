@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from 'components/Loader/Loader';
 import profileImg from '../../images/profileImg.jpg';
+import { List, Item, Img, Title, Text } from './Cast.styled';
 const baseURL = 'https://image.tmdb.org/t/p/original';
 
 const Cast = () => {
@@ -21,29 +22,27 @@ const Cast = () => {
   }, [movieId]);
 
   return (
-    <div>
+    <>
       {isLoading && <Loader />}
-      <ul>
+      <List>
         {cast.map(({ credit_id, profile_path, character, name }) => {
           return (
-            <li key={credit_id}>
-              <img
+            <Item key={credit_id}>
+              <Img
                 src={profile_path ? baseURL + profile_path : profileImg}
-                width="150"
-                height="200"
                 alt={name}
               />
-              <p>
-                <b>Character:</b> {character}
-              </p>
-              <p>
-                <b>Actor:</b> {name}
-              </p>
-            </li>
+              <Title>
+                <Text>Character:</Text> {character}
+              </Title>
+              <Title>
+                <Text>Actor:</Text> {name}
+              </Title>
+            </Item>
           );
         })}
-      </ul>
-    </div>
+      </List>
+    </>
   );
 };
 export default Cast;

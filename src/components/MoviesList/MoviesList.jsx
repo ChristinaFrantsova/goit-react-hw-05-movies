@@ -1,6 +1,6 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
-import { List, Item, Img, Title } from './MoviesList.styled';
+import { List, Item, Img, Title, MainTitle } from './MoviesList.styled';
 import posterImg from '../../images/posterImg.png';
 const baseURL = 'https://image.tmdb.org/t/p/original';
 
@@ -8,7 +8,7 @@ const MoviesList = ({ mainTitle, movies }) => {
   const location = useLocation();
   return (
     <>
-      <h2>{mainTitle}</h2>
+      <MainTitle>{mainTitle}</MainTitle>
       <List>
         {movies.map(({ id, title, poster_path }) => (
           <Item key={id}>
@@ -33,15 +33,15 @@ const MoviesList = ({ mainTitle, movies }) => {
   );
 };
 
-// MoviesList.propTypes = {
-//   mainTitle: PropTypes.string,
-//   movies: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       title: PropTypes.string,
-//       poster_path: PropTypes.string.isRequired,
-//     }).isRequired
-//   ).isRequired,
-// };
+MoviesList.propTypes = {
+  mainTitle: PropTypes.string,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string,
+      poster_path: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+};
 
 export default MoviesList;
